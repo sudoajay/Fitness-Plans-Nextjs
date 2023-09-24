@@ -42,7 +42,7 @@ function ContactUsFormTable() {
     };
     try {
       const Login_PATH =
-        "https://canva-plans.regimefit.com/api/login-database-connector.php";
+        "https://fitness-plans.regimefit.com/api/login-database-connector.php";
 
       let res = await axios({
         url: Login_PATH,

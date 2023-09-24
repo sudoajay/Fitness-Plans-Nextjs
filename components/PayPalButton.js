@@ -120,7 +120,7 @@ const ButtonWrapper = ({ currency,amount,formData,cart,getPromoCode, showSpinner
                         };
               
                         const API_PATH =
-                          "https://canva-plans.regimefit.com/api/payment_database_connector.php";
+                          "https://fitness-plans.regimefit.com/api/payment_database_connector.php";
               
                         axios
                           .post(API_PATH, sendData)

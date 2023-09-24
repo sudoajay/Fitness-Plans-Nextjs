@@ -43,7 +43,7 @@ function PaymentTable({ cart }) {
 
   function getAllPromoCode(promoCode) {
     const API_PATH =
-      "https://canva-plans.regimefit.com/api/promo_code_database_connector.php";
+      "https://fitness-plans.regimefit.com/api/promo_code_database_connector.php";
 
     axios
       .post(API_PATH, { PromoCode: promoCode })

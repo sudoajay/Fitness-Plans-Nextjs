@@ -2,7 +2,7 @@
   "name": "regimefit-fitness-plans",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://canva-plans.regimefit.com",
+  "homepage": "https://fitness-plans.regimefit.com",
   "scripts": {
     "dev": "node server.js",
     "build": "next build",
