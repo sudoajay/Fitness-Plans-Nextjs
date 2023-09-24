@@ -46,7 +46,7 @@ function isLoginDetailMatch()
     $userName = $data['username'];
     $pass = $data['password'];
     if (empty($userName) || empty($pass)) {
-        echo 'false';
+        echo false;
     }
 
     if (!$conn) {
@@ -54,10 +54,10 @@ function isLoginDetailMatch()
     } else {
         ini_set("display_errors", 1);
         error_reporting(E_ALL);
-        $sql = "SELECT * FROM $table_name WHERE PromoCode=? And Password=?;";
+        $sql = "SELECT * FROM $table_name WHERE BINARY PromoCode=? And BINARY Password=?;";
         $stmt =  mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
-            echo 'false';
+            echo false;
         }
         mysqli_stmt_bind_param($stmt, 'ss', $userName, $pass);
         mysqli_stmt_execute($stmt);
