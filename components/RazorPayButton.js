@@ -49,17 +49,17 @@ export function RazorPayButton({ data, subtotal, cart , promoCode }) {
         currency: "INR",
         amount: (realAmount * 100),
         name: "Payment",
-        description: "Canva Plans",
+        description: "fitness Plans",
         image:
-          "https://canva-plans.regimefit.com/icon.svg",
-        callback_url: "https://canva-plans.regimefit.com",
+          "https://fitness-plans.regimefit.com/icon.svg",
+        callback_url: "https://fitness-plans.regimefit.com",
         prefill: {
           name: getdata.fullName,
           email: getdata.email,
           contact: getdata.phoneNumber,
         },
         notes: {
-          address: "Canva",
+          address: "fitness",
         },
         theme: {
           color: "#009688",

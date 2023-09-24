@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
-  const pageTitle = `CanvaPlans | ${process.env.siteTitle}`  
+  const pageTitle = `FitnessPlans | ${process.env.siteTitle}`  
 
 return (
     <Layout>

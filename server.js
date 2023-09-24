@@ -3,7 +3,7 @@ const { parse } = require('url');
 const next = require('next');
  
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = process.env.NODE_ENV !=='production' ? 'localhost':'canva-plans.regimefit.com';
+const hostname = process.env.NODE_ENV !=='production' ? 'localhost':'fitness-plans.regimefit.com';
 const port = process.env.PORT || 3001;
 // when using middleware `hostname` and `port` must be provided below
 const app = next({ dev, hostname, port });
