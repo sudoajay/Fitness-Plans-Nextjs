@@ -14,7 +14,7 @@
   "/privacy-policy": "pages/privacy-policy.html",
   "/shipping-delivery-Policy": "pages/shipping-delivery-Policy.html",
   "/terms-conditions": "pages/terms-conditions.html",
-  "/products/[product]": "pages/products/[product].js",
   "/": "pages/index.js",
+  "/products/[product]": "pages/products/[product].js",
   "/404": "pages/404.html"
 }
