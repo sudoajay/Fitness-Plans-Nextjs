@@ -24,39 +24,50 @@ function PaymentTable({ cart }) {
   useEffect(() => {
     const promoCode = getPromoCodeInLocalStorage();
     if (promoCode == null) Router.push("/cart");
-    else {setPromoCode(promoCode.PromoCode);
+    else {
+      setPromoCode(promoCode.PromoCode);
 
-    const data = getPaymentFormData();
-    if (data == null) Router.push("/paymentform");
-    else setData(data);
+      const data = getPaymentFormData();
+      if (data == null) Router.push("/paymentform");
+      else setData(data);
     }
   }, []);
 
   useEffect(() => {
-
     const objectLength = (obj) => Object.entries(obj).length;
     if (objectLength(cart) == 0) Router.push("/cart");
     setCartItems(cart);
-    if (getPromoCode != "") getAllPromoCode(getPromoCode);
+    if (getPromoCode != "") checkIfPromoCodeMatch(getPromoCode);
     else setSubtotal(getCartSubTotal(cart));
   }, [cart, getPromoCode]);
 
-  function getAllPromoCode(promoCode) {
-    const API_PATH =
-      "https://fitness-plans.regimefit.com/api/promo_code_database_connector.php";
+  async function checkIfPromoCodeMatch(promoCode) {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/promocode/" + promoCode,
+        {
+          method: "GET", // *GET, POST, PUT, DELETE, etc.
+          // mode: "no-cors", // no-cors, *cors, same-origin
+          // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "include", // include, *same-origin, omit
 
-    axios
-      .post(API_PATH, { PromoCode: promoCode })
-      .then((result) => {
-        let newSubTotal = getCartDiscountSubTotal(
-          getCartSubTotal(cart),
-          result.data
-        );
+          // redirect: "follow", // manual, *follow, error
+          // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        }
+      );
 
-        setSubtotal(newSubTotal);
-      })
-      .catch(function (error) {
-      });
+      const result = await response.json();
+      let newSubTotal;
+
+      newSubTotal = getCartDiscountSubTotal(
+        getCartSubTotal(cart),
+        !result.PercentOff ? "0" : result.PercentOff
+      );
+
+      setSubtotal(newSubTotal);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   return (
@@ -89,7 +100,7 @@ function PaymentTable({ cart }) {
               </div>
 
               <div class="flex flex-col items-center  mt-10">
-              <RazorPayButton
+                <RazorPayButton
                   data={getData}
                   subtotal={subtotal}
                   cart={cartItems}
@@ -100,23 +111,22 @@ function PaymentTable({ cart }) {
                 </h2> */}
               </div>
 
-           
-
               <h2 class=" font-primary font-medium text-lg flex flex-col items-center mb-5 mt-3">
                 Or
               </h2>
 
               <div class="flex flex-col items-center">
-              <PayPalPayButton
+                <PayPalPayButton
                   data={getData}
                   subtotal={subtotal}
                   cart={cartItems}
                   promoCode={getPromoCode}
                 />
                 <h2 class=" font-primary font-semibold text-xs text-red-500">
-                  For International Users Only <sup class="star">*</sup><sup class="star">*</sup>
+                  For International Users Only <sup class="star">*</sup>
+                  <sup class="star">*</sup>
                 </h2>
-              {/* <h2 class=" font-primary font-medium text-xs text-red-500">
+                {/* <h2 class=" font-primary font-medium text-xs text-red-500">
                   For India Users Only <sup class="star">*</sup><sup class="star">*</sup>
                 </h2> */}
               </div>

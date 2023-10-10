@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import CheckOutButton from "@/components/CheckOutButton";
 import BackToProductButton from "@/components/BackToProductButton";
 
-import {useRouter} from 'next/router';
+import { useRouter } from "next/router";
 
 function CartTable({ cart }) {
   const updateCartQuantity = useUpdateCartQuantityContext();
@@ -27,13 +27,17 @@ function CartTable({ cart }) {
   const [subtotal, setSubtotal] = useState(5);
   const router = useRouter();
   useEffect(() => {
-    if(!router.isReady) return;
+    if (!router.isReady) return;
     const query = router.query;
-    if (Object.keys(query).length != 0  && typeof (query.promocode) != 'undefined' && query.promocode.length == 5) {
-      setPromoCode(query.promocode)
-      ValueChangePromoCode(query.promocode)
-    }else{
-      setPromoCode("")
+    if (
+      Object.keys(query).length != 0 &&
+      typeof query.promocode != "undefined" &&
+      query.promocode.length == 5
+    ) {
+      setPromoCode(query.promocode);
+      ValueChangePromoCode(query.promocode);
+    } else {
+      setPromoCode("");
     }
   }, [router.isReady, router.query]);
 
@@ -51,51 +55,97 @@ function CartTable({ cart }) {
     }
   }, [getPromoCode]);
 
+  // function getAllPromoCode(promoCode) {
+  //   // const API_PATH =
+  //   //   "https://fitness-plans.regimefit.com/api/promo_code_database_connector.php";
 
+  //     const API_PATH =
+  //     'http://localhost:3000/api/promocode/'+{promoCode};
 
-  function getAllPromoCode(promoCode) {
-    const API_PATH =
-      "https://fitness-plans.regimefit.com/api/promo_code_database_connector.php";
+  //   axios
+  //     .post(API_PATH, { PromoCode: promoCode })
+  //     .then((result) => {
+  //       if(getTotal !=0 ){
+  //       setPromoCode(promoCode);
+  //       let newSubTotal = getCartDiscountSubTotal(getTotal, result.data);
 
-    axios
-      .post(API_PATH, { PromoCode: promoCode })
-      .then((result) => {
-        if(getTotal !=0 ){
-        setPromoCode(promoCode);
-        let newSubTotal = getCartDiscountSubTotal(getTotal, result.data);
-          
-        
-        if (newSubTotal !== getTotal) {
-          showToast();
-          setPromoCodeMatch(true);
-        } else {
-          showToastError();
-          setPromoCodeMatch(false);
-        }
-        setSubtotal(newSubTotal);
-      }else{
-        if(setCartItems.length != 0) {
-          showToastError("Promo code not valid for free items");
-        }else{
-          showToastError("Cart is currently empty 🛒");
-        }
-      }
-      })
-      .catch(function (error) {});
-  }
+  //       if (newSubTotal !== getTotal) {
+  //         showToast();
+  //         setPromoCodeMatch(true);
+  //       } else {
+  //         showToastError();
+  //         setPromoCodeMatch(false);
+  //       }
+  //       setSubtotal(newSubTotal);
+  //     }else{
+  //       if(setCartItems.length != 0) {
+  //         showToastError("Promo code not valid for free items");
+  //       }else{
+  //         showToastError("Cart is currently empty 🛒");
+  //       }
+  //     }
+  //     })
+  //     .catch(function (error) {});
+
+  // }
 
   function ValueChangePromoCode(promoCode) {
-    
+    console.log(promoCode);
     if (isPromoCodeMatch) {
       setPromoCode("");
       setPromoCodeMatch(false);
     } else {
       if (promoCode.length == 5) {
-        getAllPromoCode(promoCode);
+        checkIfPromoCodeMatch(promoCode);
       } else {
         showToastError();
         setSubtotal(getTotal);
       }
+    }
+  }
+
+  async function checkIfPromoCodeMatch(promoCode) {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/promocode/" + promoCode,
+        {
+          method: "GET", // *GET, POST, PUT, DELETE, etc.
+          // mode: "no-cors", // no-cors, *cors, same-origin
+          // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "include", // include, *same-origin, omit
+
+          // redirect: "follow", // manual, *follow, error
+          // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        }
+      );
+
+      const result = await response.json();
+      if (getTotal != 0) {
+        if (!result.PercentOff) {
+          showToastError();
+          setPromoCodeMatch(false);
+          setPromoCode("");
+        } else {
+          setPromoCode(promoCode);
+          let newSubTotal = getCartDiscountSubTotal(
+            getTotal,
+            result.PercentOff
+          );
+          showToast();
+          setPromoCodeMatch(true);
+          setPromoCode(promoCode);
+
+          setSubtotal(newSubTotal);
+        }
+      } else {
+        if (setCartItems.length != 0) {
+          showToastError("Promo code not valid for free items");
+        } else {
+          showToastError("Cart is currently empty 🛒");
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   }
 
@@ -229,7 +279,6 @@ function CartTable({ cart }) {
                       id="promoCode"
                       class="block uppercase  shadow appearance-none border-2 border-palette-light rounded w-32 h-12  py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-palette-primary transition duration-500 ease-in-out"
                       placeholder="Code"
-                      value={getPromoCode}
                       onChange={(evt) => {
                         setPromoCode(evt.target.value.toUpperCase());
                       }}
@@ -251,18 +300,15 @@ function CartTable({ cart }) {
                 <td className="font-primary text-lg text-palette-primary font-medium px-4 sm:px-6 py-4 ">
                   <div class="relative pb-4">
                     <a
-                      
                       class="transititext-primary text-primary transition duration-10 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
                       data-te-toggle="tooltip"
                       title="To Obtain Your Exclusive Promo Code, Kindly Reach Out To Us."
                     >
                       <FontAwesomeIcon
-                      icon={faCircleQuestion}
-                      className=" h-6  "
-                    />
+                        icon={faCircleQuestion}
+                        className=" h-6  "
+                      />
                     </a>
-
-                   
                   </div>
                 </td>
               </tr>

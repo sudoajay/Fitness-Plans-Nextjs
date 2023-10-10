@@ -6,11 +6,12 @@ import { createdTimeStamp } from "@/utils/helpers";
 import { toast } from "react-toastify";
 import Router from "next/router";
 
-
-export function RazorPayButton({ data, subtotal, cart , promoCode }) {
+export function RazorPayButton({ data, subtotal, cart, promoCode }) {
   const Razorpay = useRazorpay();
 
-  function showToast(text = "You Will Get Your Order Delivered To Your Email Within 12 Hours.") {
+  function showToast(
+    text = "You Will Get Your Order Delivered To Your Email Within 12 Hours."
+  ) {
     toast.success(text, {
       position: "top-right",
       autoClose: 5000,
@@ -36,22 +37,18 @@ export function RazorPayButton({ data, subtotal, cart , promoCode }) {
     });
   }
 
-
   const handlePayment = useCallback(
     (getCart, getdata, getTotal, getPromoCode) => {
-
-
       const dollorToINR = 82.5;
-      const realAmount = Math.round((getTotal*dollorToINR))
+      const realAmount = Math.round(getTotal * dollorToINR);
       const options = {
         key: "rzp_live_h7b5GOBIKB0m2O",
         keySecret: "dE72QEy6N8DPonLo7SZJnE8S",
         currency: "INR",
-        amount: (realAmount * 100),
+        amount: realAmount * 100,
         name: "Payment",
         description: "fitness Plans",
-        image:
-          "https://fitness-plans.regimefit.com/icon.svg",
+        image: "https://fitness-plans.regimefit.com/icon.svg",
         callback_url: "https://fitness-plans.regimefit.com",
         prefill: {
           name: getdata.fullName,
@@ -65,16 +62,22 @@ export function RazorPayButton({ data, subtotal, cart , promoCode }) {
           color: "#009688",
         },
         handler: (res) => {
-      
           var items = "";
           getCart.map((item) => {
-            items += (items.length == 0 ?"" : " , "+ item.productTitle + " - " + item.quantity );
+            items +=
+              (items.length == 0 ? "" : " , ") +
+              item.productTitle +
+              " - " +
+              item.quantity;
           });
-
 
           var referralcode = "";
           cartItems.map((item) => {
-            referralcode +=( items.length == 0 ?"" : " , "+ item.productTitle + " - " + item.referralcode );
+            referralcode +=
+              (items.length == 0 ? "" : " , ") +
+              item.productTitle +
+              " - " +
+              item.referralcode;
           });
 
           let sendData = {
@@ -83,36 +86,32 @@ export function RazorPayButton({ data, subtotal, cart , promoCode }) {
             Email: getdata.email,
             PhoneNumber: getdata.phoneNumber,
             Information: getdata.postalZipCode + " - " + getdata.country,
-            Created: createdTimeStamp(),
             Product: items,
-            Amount: realAmount+" RS",
-            PromoCode:getPromoCode,
-            Referralcode:referralcode,
+            Amount: realAmount + " RS",
+            PromoCode: getPromoCode,
+            Referralcode: referralcode,
             PaymentMethod: "RazorPay",
             PaymentID: res.razorpay_payment_id,
-            OrderID:"",
-            AccessToken:""
-
+            OrderID: "",
+            AccessToken: "",
           };
 
-          const API_PATH =
-            "https://fitness-plans.regimefit.com/api/payment_database_connector.php";
+          postJsonDataPayment(sendData);
 
-          axios
-            .post(API_PATH, sendData)
-            .then((result) =>{
-              if(result.data == "Inserted Successfully"){
-                showToast()
-                Router.push("/");
-              }
-              else{
-                showToastError()
-              }
+          // const API_PATH =
+          //   "https://fitness-plans.regimefit.com/api/payment_database_connector.php";
 
-            }
-            )
-            .catch(function (error) {
-            });
+          // axios
+          //   .post(API_PATH, sendData)
+          //   .then((result) => {
+          //     if (result.data == "Inserted Successfully") {
+          //       showToast();
+          //       Router.push("/");
+          //     } else {
+          //       showToastError();
+          //     }
+          //   })
+          //   .catch(function (error) {});
         },
       };
 
@@ -121,6 +120,35 @@ export function RazorPayButton({ data, subtotal, cart , promoCode }) {
     },
     [Razorpay]
   );
+
+  async function postJsonDataPayment(data) {
+    try {
+      const response = await fetch("http://localhost:3000/api/payment", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        // mode: "no-cors", // no-cors, *cors, same-origin
+        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: "include", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect: "follow", // manual, *follow, error
+        // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log("Success:", result);
+      if (result) {
+        showToast();
+        Router.push("/");
+      } else {
+        showToastError();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
 
   return (
     <div className="App">

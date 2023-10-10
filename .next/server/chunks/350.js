@@ -36,7 +36,6 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _paypal_react_paypal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2929);
 /* harmony import */ var _paypal_react_paypal_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_paypal_react_paypal_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4108);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9648);
 /* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3590);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axios__WEBPACK_IMPORTED_MODULE_3__, react_toastify__WEBPACK_IMPORTED_MODULE_4__]);
@@ -50,10 +49,10 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axio
 // This values are the props in the UI
 const currency = "USD";
 const style = {
-    "layout": "vertical"
+    layout: "vertical"
 };
 // Custom component to wrap the PayPalButtons and handle currency changes
-const ButtonWrapper = ({ currency , amount , formData , cart , getPromoCode , showSpinner  })=>{
+const ButtonWrapper = ({ currency , amount , formData , cart , getPromoCode , showSpinner ,  })=>{
     // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
     // This is the main reason to wrap the PayPalButtons in a new component
     const [{ options , isPending  }, dispatch] = (0,_paypal_react_paypal_js__WEBPACK_IMPORTED_MODULE_2__.usePayPalScriptReducer)();
@@ -70,7 +69,7 @@ const ButtonWrapper = ({ currency , amount , formData , cart , getPromoCode , sh
         currency,
         showSpinner
     ]);
-    function showToast(text = "You Will Get Your Order Delivered To Your Email Within 12 Hours.") {
+    function showToast1(text = "You Will Get Your Order Delivered To Your Email Within 12 Hours.") {
         react_toastify__WEBPACK_IMPORTED_MODULE_4__.toast.success(text, {
             position: "top-right",
             autoClose: 5000,
@@ -82,7 +81,7 @@ const ButtonWrapper = ({ currency , amount , formData , cart , getPromoCode , sh
             theme: "light"
         });
     }
-    function showToastError(text = "Something went Wrong Contact Us") {
+    function showToastError1(text = "Something went Wrong Contact Us") {
         react_toastify__WEBPACK_IMPORTED_MODULE_4__.toast.error(text, {
             position: "top-right",
             autoClose: 2000,
@@ -128,11 +127,11 @@ const ButtonWrapper = ({ currency , amount , formData , cart , getPromoCode , sh
                         // Your code here after capture the order
                         var items = "";
                         getCart.map((item)=>{
-                            items += items.length == 0 ? "" : " , " + item.productTitle + " - " + item.quantity;
+                            items += (items.length == 0 ? "" : " , ") + item.productTitle + " - " + item.quantity;
                         });
                         var referralcode = "";
                         cartItems.map((item)=>{
-                            referralcode += items.length == 0 ? "" : " , " + item.productTitle + " - " + item.referralcode;
+                            referralcode += (items.length == 0 ? "" : " , ") + item.productTitle + " - " + item.referralcode;
                         });
                         let sendData = {
                             FullName: formData.fullName,
@@ -140,7 +139,6 @@ const ButtonWrapper = ({ currency , amount , formData , cart , getPromoCode , sh
                             Email: formData.email,
                             PhoneNumber: formData.phoneNumber,
                             Information: formData.postalZipCode + " - " + formData.country,
-                            Created: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_5__/* .createdTimeStamp */ .WU)(),
                             Product: items,
                             Amount: amount + " $",
                             PromoCode: getPromoCode,
@@ -150,21 +148,52 @@ const ButtonWrapper = ({ currency , amount , formData , cart , getPromoCode , sh
                             OrderID: data.orderID,
                             AccessToken: data.facilitatorAccessToken
                         };
-                        const API_PATH = "https://fitness-plans.regimefit.com/api/payment_database_connector.php";
-                        axios__WEBPACK_IMPORTED_MODULE_3__["default"].post(API_PATH, sendData).then((result)=>{
-                            if (result.data == "Inserted Successfully") {
-                                showToast();
-                                Router.push("/");
-                            } else {
-                                showToastError();
-                            }
-                        }).catch(function(error) {});
+                        postJsonDataPayment(sendData);
+                    // const API_PATH =
+                    //   "https://fitness-plans.regimefit.com/api/payment_database_connector.php";
+                    // axios
+                    //   .post(API_PATH, sendData)
+                    //   .then((result) => {
+                    //     if (result.data == "Inserted Successfully") {
+                    //       showToast();
+                    //       Router.push("/");
+                    //     } else {
+                    //       showToastError();
+                    //     }
+                    //   })
+                    //   .catch(function (error) {});
                     });
                 }
             })
         ]
     });
 };
+async function postJsonDataPayment(data) {
+    try {
+        const response = await fetch("http://localhost:3000/api/payment", {
+            method: "POST",
+            // mode: "no-cors", // no-cors, *cors, same-origin
+            // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            // credentials: "include", // include, *same-origin, omit
+            headers: {
+                "Content-Type": "application/json"
+            },
+            // redirect: "follow", // manual, *follow, error
+            // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        console.log("Success:", result);
+        if (result) {
+            showToast();
+            Router.push("/");
+        } else {
+            showToastError();
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
 function PayPalPayButton({ data , subtotal , cart , promoCode  }) {
     const { 0: getAmount , 1: setAmount  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(subtotal);
     // AXtS3tI1_K3qJOGb064RkufKICr4FJWqoRxsoGh5l9Sprdj1zN9VY0gc0N_JZdA7z3CMlvWLRhj0pXjk
@@ -240,20 +269,24 @@ function PaymentTable({ cart  }) {
         const objectLength = (obj)=>Object.entries(obj).length;
         if (objectLength(cart) == 0) next_router__WEBPACK_IMPORTED_MODULE_6___default().push("/cart");
         setCartItems(cart);
-        if (getPromoCode != "") getAllPromoCode(getPromoCode);
+        if (getPromoCode != "") checkIfPromoCodeMatch(getPromoCode);
         else setSubtotal((0,_utils_helpers__WEBPACK_IMPORTED_MODULE_7__/* .getCartSubTotal */ .uq)(cart));
     }, [
         cart,
         getPromoCode
     ]);
-    function getAllPromoCode(promoCode) {
-        const API_PATH = "https://fitness-plans.regimefit.com/api/promo_code_database_connector.php";
-        axios__WEBPACK_IMPORTED_MODULE_5__["default"].post(API_PATH, {
-            PromoCode: promoCode
-        }).then((result)=>{
-            let newSubTotal = (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_7__/* .getCartDiscountSubTotal */ .Pe)((0,_utils_helpers__WEBPACK_IMPORTED_MODULE_7__/* .getCartSubTotal */ .uq)(cart), result.data);
+    async function checkIfPromoCodeMatch(promoCode) {
+        try {
+            const response = await fetch("http://localhost:3000/api/promocode/" + promoCode, {
+                method: "GET"
+            });
+            const result = await response.json();
+            let newSubTotal;
+            newSubTotal = (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_7__/* .getCartDiscountSubTotal */ .Pe)((0,_utils_helpers__WEBPACK_IMPORTED_MODULE_7__/* .getCartSubTotal */ .uq)(cart), !result.PercentOff ? "0" : result.PercentOff);
             setSubtotal(newSubTotal);
-        }).catch(function(error) {});
+        } catch (error) {
+            console.error("Error:", error);
+        }
     }
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
         class: "mx-auto container flex items-center",
@@ -388,7 +421,6 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_razorpay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1040);
 /* harmony import */ var react_razorpay__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_razorpay__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9648);
-/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4108);
 /* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3590);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_5__);
@@ -453,11 +485,11 @@ function RazorPayButton({ data , subtotal , cart , promoCode  }) {
             handler: (res)=>{
                 var items = "";
                 getCart.map((item)=>{
-                    items += items.length == 0 ? "" : " , " + item.productTitle + " - " + item.quantity;
+                    items += (items.length == 0 ? "" : " , ") + item.productTitle + " - " + item.quantity;
                 });
                 var referralcode = "";
                 cartItems.map((item)=>{
-                    referralcode += items.length == 0 ? "" : " , " + item.productTitle + " - " + item.referralcode;
+                    referralcode += (items.length == 0 ? "" : " , ") + item.productTitle + " - " + item.referralcode;
                 });
                 let sendData = {
                     FullName: getdata.fullName,
@@ -465,7 +497,6 @@ function RazorPayButton({ data , subtotal , cart , promoCode  }) {
                     Email: getdata.email,
                     PhoneNumber: getdata.phoneNumber,
                     Information: getdata.postalZipCode + " - " + getdata.country,
-                    Created: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_6__/* .createdTimeStamp */ .WU)(),
                     Product: items,
                     Amount: realAmount + " RS",
                     PromoCode: getPromoCode,
@@ -475,15 +506,20 @@ function RazorPayButton({ data , subtotal , cart , promoCode  }) {
                     OrderID: "",
                     AccessToken: ""
                 };
-                const API_PATH = "https://fitness-plans.regimefit.com/api/payment_database_connector.php";
-                axios__WEBPACK_IMPORTED_MODULE_3__["default"].post(API_PATH, sendData).then((result)=>{
-                    if (result.data == "Inserted Successfully") {
-                        showToast();
-                        next_router__WEBPACK_IMPORTED_MODULE_5___default().push("/");
-                    } else {
-                        showToastError();
-                    }
-                }).catch(function(error) {});
+                postJsonDataPayment(sendData);
+            // const API_PATH =
+            //   "https://fitness-plans.regimefit.com/api/payment_database_connector.php";
+            // axios
+            //   .post(API_PATH, sendData)
+            //   .then((result) => {
+            //     if (result.data == "Inserted Successfully") {
+            //       showToast();
+            //       Router.push("/");
+            //     } else {
+            //       showToastError();
+            //     }
+            //   })
+            //   .catch(function (error) {});
             }
         };
         const rzpay = new Razorpay(options);
@@ -491,6 +527,32 @@ function RazorPayButton({ data , subtotal , cart , promoCode  }) {
     }, [
         Razorpay
     ]);
+    async function postJsonDataPayment(data) {
+        try {
+            const response = await fetch("http://localhost:3000/api/payment", {
+                method: "POST",
+                // mode: "no-cors", // no-cors, *cors, same-origin
+                // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: "include", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                // redirect: "follow", // manual, *follow, error
+                // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            console.log("Success:", result);
+            if (result) {
+                showToast();
+                next_router__WEBPACK_IMPORTED_MODULE_5___default().push("/");
+            } else {
+                showToastError();
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
         className: "App",
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", {

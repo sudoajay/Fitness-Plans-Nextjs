@@ -6,6 +6,7 @@ import {
   getPaymentFormData,
   getCartSubTotal,
   getPromoCodeInLocalStorage,
+  getCartDiscountSubTotal,
 } from "@/utils/helpers";
 import axios from "axios";
 import Router from "next/router";
@@ -55,25 +56,37 @@ function FormTable({ cart }) {
     const objectLength = (obj) => Object.entries(obj).length;
     if (objectLength(cart) == 0) Router.push("/cart");
     setCartItems(cart);
-    if (getPromoCode != "") getAllPromoCode(getPromoCode);
+    if (getPromoCode != "") checkIfPromoCodeMatch(getPromoCode);
     else setSubtotal(getCartSubTotal(cart));
   }, [cart, getPromoCode]);
 
-  function getAllPromoCode(promoCode) {
-    const API_PATH =
-      "https://fitness-plans.regimefit.com/api/promo_code_database_connector.php";
+  async function checkIfPromoCodeMatch(promoCode) {
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/promocode/" + promoCode,
+        {
+          method: "GET", // *GET, POST, PUT, DELETE, etc.
+          // mode: "no-cors", // no-cors, *cors, same-origin
+          // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "include", // include, *same-origin, omit
 
-    axios
-      .post(API_PATH, { PromoCode: promoCode })
-      .then((result) => {
-        let newSubTotal = getCartDiscountSubTotal(
-          getCartSubTotal(cart),
-          result.data
-        );
+          // redirect: "follow", // manual, *follow, error
+          // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        }
+      );
 
-        setSubtotal(newSubTotal);
-      })
-      .catch(function (error) {});
+      const result = await response.json();
+      let newSubTotal;
+
+      newSubTotal = getCartDiscountSubTotal(
+        getCartSubTotal(cart),
+        !result.PercentOff ? "0" : result.PercentOff
+      );
+
+      setSubtotal(newSubTotal);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 
   useEffect(() => {
@@ -89,8 +102,6 @@ function FormTable({ cart }) {
       setCountry(data.country);
     }
   }, []);
-
- 
 
   const newData = {
     fullName: getFullname,

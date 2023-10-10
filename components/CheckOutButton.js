@@ -15,6 +15,7 @@ import {
 } from "@/utils/helpers";
 
 import Router from "next/router";
+import { data } from "autoprefixer";
 
 function CheckOutButton({
   getNewData,
@@ -27,6 +28,7 @@ function CheckOutButton({
   const [cartItems, setCartItems] = useState([]);
 
   const [getData, setData] = useState(getNewData);
+
   useEffect(() => {
     setCartItems(cart);
   }, [cart]);
@@ -50,19 +52,21 @@ function CheckOutButton({
       //   );
 
       var items = "";
-      getCart.map((item) => {
+      cartItems.map((item) => {
         items +=
-          items.length == 0
-            ? ""
-            : " , " + item.productTitle + " - " + item.quantity;
+          (items.length == 0 ? "" : " , ") +
+          item.productTitle +
+          " - " +
+          item.quantity;
       });
 
       var referralcode = "";
       cartItems.map((item) => {
         referralcode +=
-          items.length == 0
-            ? ""
-            : " , " + item.productTitle + " - " + item.referralcode;
+          (items.length == 0 ? "" : " , ") +
+          item.productTitle +
+          " - " +
+          item.referralcode;
       });
 
       let sendData = {
@@ -78,15 +82,48 @@ function CheckOutButton({
         Referralcode: referralcode,
       };
 
-      const API_PATH =
-        "https://fitness-plans.regimefit.com/api/payment_form_database_connector.php";
+      // const API_PATH =
+      //   "https://fitness-plans.regimefit.com/api/payment_form_database_connector.php";
 
-      axios
-        .post(API_PATH, sendData)
-        .then((result) => {})
-        .catch(function (error) {});
+      // axios
+      //   .post(API_PATH, sendData)
+      //   .then((result) => {})
+      //   .catch(function (error) {});
+
+      // const API_PATH = "http://localhost:3000/api/paymentForm";
+
+      // fetch(API_PATH)
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     console.log(data);
+      //   });
+
+      postJsonPaymentForm(sendData);
 
       setPaymentFormData(getData);
+    }
+  }
+
+  async function postJsonPaymentForm(data) {
+    try {
+      const response = await fetch("http://localhost:3000/api/paymentForm", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        // mode: "no-cors", // no-cors, *cors, same-origin
+        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: "include", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect: "follow", // manual, *follow, error
+        // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log("Success:", result);
+    } catch (error) {
+      console.error("Error:", error);
     }
   }
 
@@ -150,18 +187,39 @@ function CheckOutButton({
         FullName: getData.fullName,
         Email: getData.email,
         Message: getData.message,
-        Created: createdTimeStamp(),
       };
 
-      const API_PATH =
-        "https://fitness-plans.regimefit.com/api/contact_us_database_connector.php";
+      // const API_PATH =
+      //   "https://fitness-plans.regimefit.com/api/contact_us_database_connector.php";
 
-      axios
-        .post(API_PATH, sendData)
-        .then((result) => {})
-        .catch(function (error) {});
+      // axios
+      //   .post(API_PATH, sendData)
+      //   .then((result) => {})
+      //   .catch(function (error) {});
+      postJsonContactUsForm(sendData);
+    }
+  }
 
-      setPaymentFormData(getData);
+  async function postJsonContactUsForm(data) {
+    try {
+      const response = await fetch("http://localhost:3000/api/contact", {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        // mode: "no-cors", // no-cors, *cors, same-origin
+        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        // credentials: "include", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        // redirect: "follow", // manual, *follow, error
+        // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      console.log("Success:", result);
+    } catch (error) {
+      console.error("Error:", error);
     }
   }
 
@@ -208,7 +266,6 @@ function CheckOutButton({
       showToastError(" 🔑 Password is required");
     } else {
       checkIfLoginMatch().then((res) => {
-        
         if (res == true) {
           let data = {
             UserName: getData.username,

@@ -21,11 +21,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3590);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9648);
-/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4108);
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4108);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1853);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var autoprefixer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(796);
+/* harmony import */ var autoprefixer__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(autoprefixer__WEBPACK_IMPORTED_MODULE_8__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__, react_toastify__WEBPACK_IMPORTED_MODULE_5__, axios__WEBPACK_IMPORTED_MODULE_6__]);
 ([_fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__, react_toastify__WEBPACK_IMPORTED_MODULE_5__, axios__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -62,12 +65,12 @@ function CheckOutButton({ getNewData , cart , showText , webUrl , promoCode , su
             //     "You Will Get Your Order Delivered To Your Email Within 12 Hours."
             //   );
             var items = "";
-            getCart.map((item)=>{
-                items += items.length == 0 ? "" : " , " + item.productTitle + " - " + item.quantity;
+            cartItems.map((item)=>{
+                items += (items.length == 0 ? "" : " , ") + item.productTitle + " - " + item.quantity;
             });
             var referralcode = "";
             cartItems.map((item)=>{
-                referralcode += items.length == 0 ? "" : " , " + item.productTitle + " - " + item.referralcode;
+                referralcode += (items.length == 0 ? "" : " , ") + item.productTitle + " - " + item.referralcode;
             });
             let sendData = {
                 FullName: getData.fullName,
@@ -75,15 +78,46 @@ function CheckOutButton({ getNewData , cart , showText , webUrl , promoCode , su
                 Email: getData.email,
                 PhoneNumber: getData.phoneNumber,
                 Information: getData.postalZipCode + " - " + getData.country,
-                Created: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_8__/* .createdTimeStamp */ .WU)(),
+                Created: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_9__/* .createdTimeStamp */ .WU)(),
                 Product: items,
                 Amount: subtotal + " $",
                 PromoCode: promoCode,
                 Referralcode: referralcode
             };
-            const API_PATH = "https://fitness-plans.regimefit.com/api/payment_form_database_connector.php";
-            axios__WEBPACK_IMPORTED_MODULE_6__["default"].post(API_PATH, sendData).then((result)=>{}).catch(function(error) {});
-            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_8__/* .setPaymentFormData */ .Lk)(getData);
+            // const API_PATH =
+            //   "https://fitness-plans.regimefit.com/api/payment_form_database_connector.php";
+            // axios
+            //   .post(API_PATH, sendData)
+            //   .then((result) => {})
+            //   .catch(function (error) {});
+            // const API_PATH = "http://localhost:3000/api/paymentForm";
+            // fetch(API_PATH)
+            //   .then((response) => response.json())
+            //   .then((data) => {
+            //     console.log(data);
+            //   });
+            postJsonPaymentForm(sendData);
+            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_9__/* .setPaymentFormData */ .Lk)(getData);
+        }
+    }
+    async function postJsonPaymentForm(data) {
+        try {
+            const response = await fetch("http://localhost:3000/api/paymentForm", {
+                method: "POST",
+                // mode: "no-cors", // no-cors, *cors, same-origin
+                // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: "include", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                // redirect: "follow", // manual, *follow, error
+                // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            console.log("Success:", result);
+        } catch (error) {
+            console.error("Error:", error);
         }
     }
     // function checkIfEmailAlreadyPresent() {
@@ -139,12 +173,35 @@ function CheckOutButton({ getNewData , cart , showText , webUrl , promoCode , su
             let sendData = {
                 FullName: getData.fullName,
                 Email: getData.email,
-                Message: getData.message,
-                Created: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_8__/* .createdTimeStamp */ .WU)()
+                Message: getData.message
             };
-            const API_PATH = "https://fitness-plans.regimefit.com/api/contact_us_database_connector.php";
-            axios__WEBPACK_IMPORTED_MODULE_6__["default"].post(API_PATH, sendData).then((result)=>{}).catch(function(error) {});
-            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_8__/* .setPaymentFormData */ .Lk)(getData);
+            // const API_PATH =
+            //   "https://fitness-plans.regimefit.com/api/contact_us_database_connector.php";
+            // axios
+            //   .post(API_PATH, sendData)
+            //   .then((result) => {})
+            //   .catch(function (error) {});
+            postJsonContactUsForm(sendData);
+        }
+    }
+    async function postJsonContactUsForm(data) {
+        try {
+            const response = await fetch("http://localhost:3000/api/contact", {
+                method: "POST",
+                // mode: "no-cors", // no-cors, *cors, same-origin
+                // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                // credentials: "include", // include, *same-origin, omit
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                // redirect: "follow", // manual, *follow, error
+                // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            console.log("Success:", result);
+        } catch (error) {
+            console.error("Error:", error);
         }
     }
     const checkIfFullName = ()=>{
@@ -176,7 +233,7 @@ function CheckOutButton({ getNewData , cart , showText , webUrl , promoCode , su
                     let data = {
                         UserName: getData.username
                     };
-                    (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_8__.setLoginData)(data);
+                    (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_9__.setLoginData)(data);
                     showToast("Succesfull Login");
                     next_router__WEBPACK_IMPORTED_MODULE_7___default().push(webUrl);
                 } else {
@@ -256,7 +313,7 @@ function CheckOutButton({ getNewData , cart , showText , webUrl , promoCode , su
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
             onClick: ()=>Object.entries({
                     webUrl
-                })[0][1] == "/paymentform" ? cartItems === undefined || cartItems.length == 0 ? showToastError() : (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_8__/* .setPromoCodeInLocalStorage */ .mi)(promoCode) : Object.entries({
+                })[0][1] == "/paymentform" ? cartItems === undefined || cartItems.length == 0 ? showToastError() : (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_9__/* .setPromoCodeInLocalStorage */ .mi)(promoCode) : Object.entries({
                     webUrl
                 })[0][1] == "/payment" ?  true ? "" : 0 : Object.entries({
                     webUrl
