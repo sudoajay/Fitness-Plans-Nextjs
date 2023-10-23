@@ -63,7 +63,7 @@ function FormTable({ cart }) {
   async function checkIfPromoCodeMatch(promoCode) {
     try {
       const response = await fetch(
-        "http://localhost:3000/api/promocode/" + promoCode,
+        "https://fitness-plans.regimefit.com/api/promocode/" + promoCode,
         {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
           // mode: "no-cors", // no-cors, *cors, same-origin

@@ -2,19 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin-panel-setting": "pages/admin-panel-setting.html",
-  "/admin-panel": "pages/admin-panel.html",
-  "/contact-us": "pages/contact-us.html",
-  "/cart": "pages/cart.html",
-  "/cancellation-refund-policy": "pages/cancellation-refund-policy.html",
-  "/faq": "pages/faq.html",
-  "/login": "pages/login.html",
-  "/payment": "pages/payment.html",
-  "/privacy-policy": "pages/privacy-policy.html",
-  "/paymentform": "pages/paymentform.html",
-  "/shipping-delivery-Policy": "pages/shipping-delivery-Policy.html",
-  "/terms-conditions": "pages/terms-conditions.html",
-  "/": "pages/index.js",
-  "/products/[product]": "pages/products/[product].js",
-  "/404": "pages/404.html"
+  "/cart": "pages/cart.js"
 }

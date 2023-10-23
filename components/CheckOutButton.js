@@ -90,7 +90,7 @@ function CheckOutButton({
       //   .then((result) => {})
       //   .catch(function (error) {});
 
-      // const API_PATH = "http://localhost:3000/api/paymentForm";
+      // const API_PATH = "https://fitness-plans.regimefit.com/api/paymentForm";
 
       // fetch(API_PATH)
       //   .then((response) => response.json())
@@ -106,19 +106,22 @@ function CheckOutButton({
 
   async function postJsonPaymentForm(data) {
     try {
-      const response = await fetch("http://localhost:3000/api/paymentForm", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        // mode: "no-cors", // no-cors, *cors, same-origin
-        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: "include", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        // redirect: "follow", // manual, *follow, error
-        // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://fitness-plans.regimefit.com/api/paymentForm",
+        {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          // mode: "no-cors", // no-cors, *cors, same-origin
+          // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "include", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // redirect: "follow", // manual, *follow, error
+          // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data),
+        }
+      );
 
       const result = await response.json();
       console.log("Success:", result);
@@ -202,19 +205,22 @@ function CheckOutButton({
 
   async function postJsonContactUsForm(data) {
     try {
-      const response = await fetch("http://localhost:3000/api/contact", {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        // mode: "no-cors", // no-cors, *cors, same-origin
-        // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        // credentials: "include", // include, *same-origin, omit
-        headers: {
-          "Content-Type": "application/json",
-          // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        // redirect: "follow", // manual, *follow, error
-        // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "https://fitness-plans.regimefit.com/api/contact",
+        {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          // mode: "no-cors", // no-cors, *cors, same-origin
+          // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          // credentials: "include", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          // redirect: "follow", // manual, *follow, error
+          // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data),
+        }
+      );
 
       const result = await response.json();
       console.log("Success:", result);
