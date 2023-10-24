@@ -59,14 +59,18 @@ function CheckOutButton({
           " - " +
           item.quantity;
       });
-
+      items = "";
       var referralcode = "";
       cartItems.map((item) => {
         referralcode +=
-          (items.length == 0 ? "" : " , ") +
-          item.productTitle +
-          " - " +
-          item.referralcode;
+          (items.length == 0 ||
+          !item.referralcode ||
+          item.referralcode.length === 0
+            ? ""
+            : " , ") +
+          (!item.referralcode || item.referralcode.length === 0
+            ? ""
+            : item.productTitle + " - " + item.referralcode);
       });
 
       let sendData = {

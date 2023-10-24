@@ -90,7 +90,7 @@ function CartTable({ cart }) {
   // }
 
   function ValueChangePromoCode(promoCode) {
-    console.log(promoCode);
+    console.log(promoCode + " --- " + isPromoCodeMatch);
     if (isPromoCodeMatch) {
       setPromoCode("");
       setPromoCodeMatch(false);
@@ -280,6 +280,7 @@ function CartTable({ cart }) {
                       id="promoCode"
                       class="block uppercase  shadow appearance-none border-2 border-palette-light rounded w-32 h-12  py-2 px-2 text-gray-700 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-palette-primary transition duration-500 ease-in-out"
                       placeholder="Code"
+                      value={getPromoCode}
                       onChange={(evt) => {
                         setPromoCode(evt.target.value.toUpperCase());
                       }}

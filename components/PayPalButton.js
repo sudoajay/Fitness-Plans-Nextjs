@@ -93,23 +93,26 @@ const ButtonWrapper = ({
         onApprove={async function (data, actions) {
           return actions.order.capture().then(function () {
             // Your code here after capture the order
-
             var items = "";
-            getCart.map((item) => {
+            cartItems.map((item) => {
               items +=
                 (items.length == 0 ? "" : " , ") +
                 item.productTitle +
                 " - " +
                 item.quantity;
             });
-
+            items = "";
             var referralcode = "";
             cartItems.map((item) => {
               referralcode +=
-                (items.length == 0 ? "" : " , ") +
-                item.productTitle +
-                " - " +
-                item.referralcode;
+                (items.length == 0 ||
+                !item.referralcode ||
+                item.referralcode.length === 0
+                  ? ""
+                  : " , ") +
+                (!item.referralcode || item.referralcode.length === 0
+                  ? ""
+                  : item.productTitle + " - " + item.referralcode);
             });
 
             let sendData = {
