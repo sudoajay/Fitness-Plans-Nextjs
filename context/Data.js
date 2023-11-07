@@ -5,8 +5,8 @@ export async function getAllProductsFromJson() {
       title: "Novice Abs Blitz",
       description: "Carve Strong Core, Unveil Chiseled Six-Packs.",
       price: "9.99",
-      rupess:"799.00",
-      mainImage:"1.webp",
+      rupess: "799.00",
+      mainImage: "1.webp",
       images: {
         0: "1.webp",
         1: "2.webp",
@@ -18,8 +18,8 @@ export async function getAllProductsFromJson() {
       title: "Novice Arms Blitz",
       description: "Build Strong Arms from Scratch.",
       price: "9.99",
-      rupess:"799.00",
-      mainImage:"4.webp",
+      rupess: "799.00",
+      mainImage: "4.webp",
       images: {
         0: "4.webp",
         1: "5.webp",
@@ -31,8 +31,8 @@ export async function getAllProductsFromJson() {
       title: "Novice Back Blitz",
       description: "Forge a Powerful, Muscular Back.",
       price: "9.99",
-      rupess:"799.00",
-      mainImage:"7.webp",
+      rupess: "799.00",
+      mainImage: "7.webp",
       images: {
         0: "7.webp",
         1: "8.webp",
@@ -44,8 +44,8 @@ export async function getAllProductsFromJson() {
       title: "Novice Shoulder B.",
       description: "Unleash 3D-Looking Cannonball Shoulders.",
       price: "9.99",
-      rupess:"799.00",
-      mainImage:"10.webp",
+      rupess: "799.00",
+      mainImage: "10.webp",
       images: {
         0: "10.webp",
         1: "11.webp",
@@ -57,8 +57,8 @@ export async function getAllProductsFromJson() {
       title: "Novice Chest Blitz",
       description: "Carve a Strong and Sculpted Chest.",
       price: "9.99",
-      rupess:"799.00",
-      mainImage:"13.webp",
+      rupess: "799.00",
+      mainImage: "13.webp",
       images: {
         0: "13.webp",
         1: "14.webp",
@@ -70,8 +70,8 @@ export async function getAllProductsFromJson() {
       title: "Novice Leg Blitz",
       description: "Build Powerful Legs and achieve godly Strength.",
       price: "9.99",
-      rupess:"799.00",
-      mainImage:"16.webp",
+      rupess: "799.00",
+      mainImage: "16.webp",
       images: {
         0: "16.webp",
         1: "17.webp",
@@ -98,8 +98,7 @@ export const faqContent1 = [
   {
     title: {
       id: "2",
-      question:
-        "How long are the workout sessions for each plan?",
+      question: "How long are the workout sessions for each plan?",
     },
     content: {
       id: "2",
@@ -110,8 +109,7 @@ export const faqContent1 = [
   {
     title: {
       id: "3",
-      question:
-        "Can I do these workouts at home or do I need access to a gym?",
+      question: "Can I do these workouts at home or do I need access to a gym?",
     },
     content: {
       id: "3",
@@ -170,8 +168,7 @@ export const faqContent1 = [
   {
     title: {
       id: "8",
-      question:
-        "What equipment do I need for the workout plans?",
+      question: "What equipment do I need for the workout plans?",
     },
     content: {
       id: "8",
@@ -182,8 +179,7 @@ export const faqContent1 = [
   {
     title: {
       id: "9",
-      question:
-        "Are there any age restrictions for these workout plans?",
+      question: "Are there any age restrictions for these workout plans?",
     },
     content: {
       id: "9",

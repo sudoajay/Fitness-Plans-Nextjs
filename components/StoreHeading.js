@@ -1,15 +1,20 @@
-import PageTitle from '@/components/PageTitle'
+import PageTitle from "@/components/PageTitle";
+import { useState, useEffect, useContext } from "react";
+import AppInformationContext from "@/context/App-Information-Context.js";
 
 function StoreHeading() {
+  const { appInformation, setAppInformation } = useContext(
+    AppInformationContext
+  );
   return (
     <div className="">
-        <PageTitle text="Get Workout Plans!" />
-      
+      <PageTitle text={appInformation.mainTitle} />
+
       <p className="max-w-xl text-center px-2 mx-auto text-base font-normal text-gray-600">
-      Unleash your body's power. Transform your life through strength, wellness, and self-improvement. 💪
+        {appInformation.mainDescription}
       </p>
     </div>
-  )
+  );
 }
 
-export default StoreHeading
+export default StoreHeading;

@@ -1,25 +1,23 @@
-import SEO from '@/components/SEO'
-import PageTitle from '@/components/PageTitle'
-import BackToProductButton from '@/components/BackToProductButton'
-import { useCartContext } from '@/context/Store'
-import {ShippingDeliveryPolicyTable} from '@/components/ShippingDeliveryPolicyTable'
-
+import SEO from "@/components/SEO";
+import PageTitle from "@/components/PageTitle";
+import BackToProductButton from "@/components/BackToProductButton";
+import { useCartContext } from "@/context/Store";
+import { ShippingDeliveryPolicyTable } from "@/components/ShippingDeliveryPolicyTable";
 
 function TermsForm() {
-    const pageTitle = `Shipping & Delivery Policy | ${process.env.siteTitle}`  
-    const [cart, checkoutUrl] = useCartContext()
+  const pageTitle = `Shipping & Delivery Policy`;
+  const [cart, checkoutUrl] = useCartContext();
 
-    return (
-      <div className="container mx-auto mb-20 min-h-50">
-        <SEO title={pageTitle} />
-        <PageTitle text="Shipping & Delivery Policy" />
-        <ShippingDeliveryPolicyTable/>
-        <div className="max-w-sm mx-auto space-y-4 px-2">
-          <BackToProductButton   />
-        </div>
-  
+  return (
+    <div className="container mx-auto mb-20 min-h-50">
+      <SEO pageTitle={pageTitle} />
+      <PageTitle text="Shipping & Delivery Policy" />
+      <ShippingDeliveryPolicyTable />
+      <div className="max-w-sm mx-auto space-y-4 px-2">
+        <BackToProductButton />
       </div>
-    )
-  }
+    </div>
+  );
+}
 
-export default TermsForm
+export default TermsForm;

@@ -1,22 +1,17 @@
-import SEO from '@/components/SEO'
-import PageTitle from '@/components/PageTitle'
-import AdminPanelPage from '@/components/AdminPanelPage'
-
+import SEO from "@/components/SEO";
+import PageTitle from "@/components/PageTitle";
+import AdminPanelPage from "@/components/AdminPanelPage";
 
 function PayementForm() {
-    const pageTitle = `Admin-Panel | ${process.env.siteTitle}`  
+  const pageTitle = `Admin-Panel`;
 
-    
-  
-    return (
-      <div className="container mx-auto mb-20 min-h-50">
-        <SEO title={pageTitle} />
-        <PageTitle text="Admin Panel" />
-        <AdminPanelPage/>
+  return (
+    <div className="container mx-auto mb-20 min-h-50">
+      <SEO pageTitle={pageTitle} />
+      <PageTitle text="Admin Panel" />
+      <AdminPanelPage />
+    </div>
+  );
+}
 
-  
-      </div>
-    )
-  }
-
-export default PayementForm
+export default PayementForm;

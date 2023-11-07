@@ -1,22 +1,23 @@
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { useCartContext } from '@/context/Store'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
+import { useState, useEffect, useContext } from "react";
+import Link from "next/link";
+import { useCartContext } from "@/context/Store";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import AppInformationContext from "@/context/App-Information-Context.js";
 
 function Nav() {
-
-
-  const cart = useCartContext()[0]
-  const [cartItems, setCartItems] = useState(0)
-
+  const cart = useCartContext()[0];
+  const [cartItems, setCartItems] = useState(0);
+  const { appInformation, setAppInformation } = useContext(
+    AppInformationContext
+  );
   useEffect(() => {
-    let numItems = 0
-    cart.forEach(item => {
-      numItems += item.quantity
-    })
-    setCartItems(numItems)
-  }, [cart])
+    let numItems = 0;
+    cart.forEach((item) => {
+      numItems += item.quantity;
+    });
+    setCartItems(numItems);
+  }, [cart]);
 
   return (
     <header className="border-b border-palette-lighter sticky top-0 z-20 bg-white">
@@ -24,39 +25,38 @@ function Nav() {
         <Link href="/" passHref legacyBehavior>
           <a className=" cursor-pointer">
             <h1 className="flex no-underline">
-              <img height="32" width="32" alt="logo" className="h-8 w-8 mr-1 object-contain" src="/icon.svg" />
+              <img
+                height="32"
+                width="32"
+                alt="logo"
+                className="h-8 w-8 mr-1 object-contain"
+                src="/icon.svg"
+              />
               <span className="text-xl font-primary font-semibold tracking-tight pt-0.5 pl-1">
-                {process.env.siteTitle}
+                {appInformation.appTitle}
               </span>
             </h1>
           </a>
         </Link>
 
-        
-
         <div>
-          <Link
-            href="/cart"
-            passHref legacyBehavior
-          >
+          <Link href="/cart" passHref legacyBehavior>
             <a className=" relative" aria-label="cart">
-              <FontAwesomeIcon className="text-palette-primary w-6 m-auto" icon={faShoppingCart} />
-              {
-                cartItems === 0?
-                  null
-                  :
-                  <div
-                    className="relative bottom-5 right-7 text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 transform translate-x-10 -translate-y-3"
-                  >
-                    {cartItems}
-                  </div>
-              }
+              <FontAwesomeIcon
+                className="text-palette-primary w-6 m-auto"
+                icon={faShoppingCart}
+              />
+              {cartItems === 0 ? null : (
+                <div className="relative bottom-5 right-7 text-xs bg-yellow-300 text-gray-900 font-semibold rounded-full py-1 px-2 transform translate-x-10 -translate-y-3">
+                  {cartItems}
+                </div>
+              )}
             </a>
           </Link>
         </div>
       </div>
-    </header >
-  )
+    </header>
+  );
 }
 
-export default Nav
+export default Nav;
