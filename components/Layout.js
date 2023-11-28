@@ -17,7 +17,7 @@ function Layout({ children }) {
   async function fetchAppInformation() {
     try {
       const response = await fetch(
-        "http://localhost:3002/api/app-information",
+        "http://localhost:3002/api/get/app/information",
         {
           method: "GET", // *GET, POST, PUT, DELETE, etc.
           // mode: "no-cors", // no-cors, *cors, same-origin

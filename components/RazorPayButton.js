@@ -166,7 +166,7 @@ export function RazorPayButton({ data, subtotal, cart, promoCode }) {
       >
         <img
           class="h-8 w-8 mr-1 object-contain"
-          src="/images/item/razorpay.svg"
+          src="/images/asset/razorpay.svg"
           alt="dummy-image"
         />
         Pay with RazorPay

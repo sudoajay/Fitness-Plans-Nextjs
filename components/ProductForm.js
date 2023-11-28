@@ -1,42 +1,41 @@
-import { useState,useEffect } from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
-import { useCartContext, useAddToCartContext } from '@/context/Store'
+import { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { useCartContext, useAddToCartContext } from "@/context/Store";
 import { toast } from "react-toastify";
-import {useRouter} from 'next/router';
-
+import { useRouter } from "next/router";
 
 function ProductForm({ title, handle, price, mainImg }) {
-  const [quantity, setQuantity] = useState(1)
-  const isLoading = useCartContext()[2]
-  const addToCart = useAddToCartContext()
+  const [quantity, setQuantity] = useState(1);
+  const isLoading = useCartContext()[2];
+  const addToCart = useAddToCartContext();
   const router = useRouter();
   const [getReferralcode, setReferralcode] = useState("");
 
-
   useEffect(() => {
-    if(!router.isReady) return;
+    if (!router.isReady) return;
     const query = router.query;
-    if (Object.keys(query).length != 0  && typeof (query.referralcode) != 'undefined' && query.referralcode.length == 5) {
-      setReferralcode(query.referralcode)
-    }else{
-      setReferralcode("")
+    if (
+      Object.keys(query).length != 0 &&
+      typeof query.referralcode != "undefined" &&
+      query.referralcode.length == 5
+    ) {
+      setReferralcode(query.referralcode);
+    } else {
+      setReferralcode("");
     }
   }, [router.isReady, router.query]);
 
-  const atcBtnStyle = isLoading ?
-    `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
+  const atcBtnStyle = isLoading
+    ? `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
                       justify-center items-baseline  hover:bg-palette-dark opacity-25 cursor-none`
-    :
-    `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
-                      justify-center items-baseline  hover:bg-palette-dark`
+    : `pt-3 pb-2 bg-palette-primary text-white w-full mt-2 rounded-sm font-primary font-semibold text-xl flex 
+                      justify-center items-baseline  hover:bg-palette-dark`;
 
   async function handleAddToCart() {
     // update store context
-    if (quantity !== '') {
-
+    if (quantity !== "") {
       showToast("Product added to cart 🛒");
-
 
       addToCart({
         productTitle: title,
@@ -44,20 +43,20 @@ function ProductForm({ title, handle, price, mainImg }) {
         productImage: mainImg,
         price: price,
         quantity: quantity,
-        referralcode:getReferralcode
-      })
+        referralcode: getReferralcode,
+      });
     }
   }
 
   function updateQuantity(e) {
-    if (e === '') {
-      setQuantity('')
+    if (e === "") {
+      setQuantity("");
     } else {
-      setQuantity(Math.floor(e))
+      setQuantity(Math.floor(e));
     }
   }
 
-  function showToast (text){
+  function showToast(text) {
     toast.success(text, {
       position: "top-right",
       autoClose: 1000,
@@ -119,7 +118,7 @@ function ProductForm({ title, handle, price, mainImg }) {
         <FontAwesomeIcon icon={faShoppingCart} className="w-5 ml-2" />
       </button>
     </div>
-  )
+  );
 }
 
-export default ProductForm
+export default ProductForm;

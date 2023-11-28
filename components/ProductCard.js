@@ -1,24 +1,21 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import Price from '@/components/Price'
-import React, { useEffect, useState } from 'react';
-import axios from 'axios'
+import Image from "next/image";
+import Link from "next/link";
+import Price from "@/components/Price";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function ProductCard({ products }) {
+  const handle = products.slug;
+  const title = products.title;
+  const description = products.description;
+  const price = products.price;
+  const rupess = products.rupess;
+  const imageNode = products.mainImage;
+  const itemId = products.id;
 
- 
-
-  const handle = products.slug
-  const title = products.title
-  const description = products.description
-  const price = products.price
-  const rupess = products.rupess
-  const imageNode = products.mainImage
-
-    const [state, setState] = useState({
-      countryName: "",
-    });
-  
+  const [state, setState] = useState({
+    countryName: "",
+  });
 
   const getGeoInfo = () => {
     axios
@@ -37,21 +34,15 @@ function ProductCard({ products }) {
 
   useEffect(() => {
     getGeoInfo();
+    console.log("products" + JSON.stringify(products));
   }, []);
 
-
-
-
-
   return (
-    <Link
-      href={`/products/${handle}`}
-      passHref legacyBehavior
-    >
+    <Link href={`/products/${handle}`} passHref legacyBehavior>
       <a className="h-140 w-64 rounded shadow-lg mx-auto border border-palette-lighter">
         <div className="h-96 border-b-2 border-palette-lighter relative">
           <Image
-            src={`/images/item/${imageNode}`}
+            src={`/images/item/${itemId}/${imageNode}`}
             alt={title}
             layout="responsive"
             width={250}
@@ -79,7 +70,7 @@ function ProductCard({ products }) {
         </div>
       </a>
     </Link>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;

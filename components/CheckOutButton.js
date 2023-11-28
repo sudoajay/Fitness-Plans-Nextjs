@@ -83,7 +83,7 @@ function CheckOutButton({
         Product: items,
         Amount: subtotal + " $",
         PromoCode: promoCode,
-        Referralcode: referralcode,
+        ReferralCode: referralcode,
       };
 
       // const API_PATH =
