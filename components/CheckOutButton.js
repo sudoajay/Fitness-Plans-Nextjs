@@ -111,7 +111,7 @@ function CheckOutButton({
   async function postJsonPaymentForm(data) {
     try {
       const response = await fetch(
-        "https://fitness-plans.regimefit.com/api/paymentForm",
+        "https://fitness-plans.regimefit.com/api/payment/form",
         {
           method: "POST", // *GET, POST, PUT, DELETE, etc.
           // mode: "no-cors", // no-cors, *cors, same-origin

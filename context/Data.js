@@ -11,7 +11,8 @@ export async function getAllProductsFromJson() {
     });
 
     const result = await response.json();
-    console.log("result --- " + JSON.stringify(result));
+    console.log(" hello --- ");
+    console.log(" hello --- " + JSON.stringify(result[0]));
 
     return result;
   } catch (error) {
@@ -100,6 +101,28 @@ export async function getAllProductsFromJson() {
   //     },
   //   },
   // ];
+}
+
+export async function fetchAllFAQData() {
+  try {
+    const response = await fetch("http://localhost:3002/api/get/all/faq/", {
+      method: "GET", // *GET, POST, PUT, DELETE, etc.
+      // mode: "no-cors", // no-cors, *cors, same-origin
+      // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      // credentials: "include", // include, *same-origin, omit
+
+      // redirect: "follow", // manual, *follow, error
+      // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    });
+
+    const result = await response.json();
+    console.log(" here --- ");
+    console.log(" here --- " + JSON.stringify(result[0]));
+    return result;
+  } catch (error) {
+    console.error("Error:", error);
+    return {};
+  }
 }
 
 export const faqContent1 = [

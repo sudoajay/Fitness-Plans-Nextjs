@@ -93,7 +93,7 @@ export function RazorPayButton({ data, subtotal, cart, promoCode }) {
             Product: items,
             Amount: realAmount + " RS",
             PromoCode: getPromoCode,
-            Referralcode: referralcode,
+            ReferralCode: referralcode,
             PaymentMethod: "RazorPay",
             PaymentID: res.razorpay_payment_id,
             OrderID: "",

@@ -124,7 +124,7 @@ const ButtonWrapper = ({
               Product: items,
               Amount: amount + " $",
               PromoCode: getPromoCode,
-              Referralcode: referralcode,
+              ReferralCode: referralcode,
               PaymentMethod: "PayPal",
               PaymentID: data.payerID,
               OrderID: data.orderID,

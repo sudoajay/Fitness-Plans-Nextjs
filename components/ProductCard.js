@@ -34,7 +34,6 @@ function ProductCard({ products }) {
 
   useEffect(() => {
     getGeoInfo();
-    console.log("products" + JSON.stringify(products));
   }, []);
 
   return (
