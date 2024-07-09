@@ -21,7 +21,7 @@ function ProductDetails({ products }) {
         title={products.title}
         handle={products.slug}
         price={price}
-        mainImg={itemId + "/" + products.mainImage}
+        mainImg={products.mainImage}
       />
       <BackToProductButton />
 

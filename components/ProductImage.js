@@ -23,7 +23,7 @@ function ProductImage({ products }) {
     <div className="w-full md:w-1/2 max-w-md border border-palette-lighter bg-white rounded shadow-lg">
       <div className="relative h-150">
         <Image
-          src={`/images/item/${itemId}/${mainImg}`}
+          src={`/images/item/${mainImg}`}
           alt={products.title}
           layout="fill"
           className="transform duration-500 ease-in-out hover:scale-105"
@@ -52,7 +52,7 @@ function ProductImage({ products }) {
               onClick={() => setMainImg(products.images[value])}
             >
               <Image
-                src={`/images/item/${itemId}/${products.images[value]}`}
+                src={`/images/item/${products.images[value]}`}
                 alt={products.title}
                 layout="fill"
                 className=""

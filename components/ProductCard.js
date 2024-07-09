@@ -41,7 +41,7 @@ function ProductCard({ products }) {
       <a className="h-140 w-64 rounded shadow-lg mx-auto border border-palette-lighter">
         <div className="h-96 border-b-2 border-palette-lighter relative">
           <Image
-            src={`/images/item/${itemId}/${imageNode}`}
+            src={`/images/item/${imageNode}`}
             alt={title}
             layout="responsive"
             width={250}

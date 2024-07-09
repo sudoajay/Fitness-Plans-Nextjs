@@ -1,106 +1,107 @@
 export async function getAllProductsFromJson() {
-  try {
-    const response = await fetch("http://localhost:3002/api/get/all/item/1", {
-      method: "GET", // *GET, POST, PUT, DELETE, etc.
-      // mode: "no-cors", // no-cors, *cors, same-origin
-      // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      // credentials: "include", // include, *same-origin, omit
+  // try {
+  //   const response = await fetch("http://localhost:3002/api/get/all/item/1", {
+  //     method: "GET", // *GET, POST, PUT, DELETE, etc.
+  //     // mode: "no-cors", // no-cors, *cors, same-origin
+  //     // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+  //     // credentials: "include", // include, *same-origin, omit
 
-      // redirect: "follow", // manual, *follow, error
-      // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    });
+  //     // redirect: "follow", // manual, *follow, error
+  //     // referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+  //   });
 
-    const result = await response.json();
-    console.log(" hello --- ");
-    console.log(" hello --- " + JSON.stringify(result[0]));
+  //   const result = await response.json();
+  //   console.log(" hello --- ");
+  //   console.log(" hello --- " + JSON.stringify(result[0]));
 
-    return result;
-  } catch (error) {
-    return {};
+  //   return result;
+  // } catch (error) {
+  //   return {};
 
-    console.error("Error:", error);
-  }
+  //   console.error("Error:", error);
+  // }
 
-  // const products = [
-  //   {
-  //     slug: "novice-abs-blitz",
-  //     title: "Novice Abs Blitz",
-  //     description: "Carve Strong Core, Unveil Chiseled Six-Packs.",
-  //     price: "9.99",
-  //     rupess: "799.00",
-  //     mainImage: "1.webp",
-  //     images: {
-  //       0: "1.webp",
-  //       1: "2.webp",
-  //       2: "3.webp",
-  //     },
-  //   },
-  //   {
-  //     slug: "novice-arms-blitz",
-  //     title: "Novice Arms Blitz",
-  //     description: "Build Strong Arms from Scratch.",
-  //     price: "9.99",
-  //     rupess: "799.00",
-  //     mainImage: "4.webp",
-  //     images: {
-  //       0: "4.webp",
-  //       1: "5.webp",
-  //       2: "6.webp",
-  //     },
-  //   },
-  //   {
-  //     slug: "novice-back-blitz",
-  //     title: "Novice Back Blitz",
-  //     description: "Forge a Powerful, Muscular Back.",
-  //     price: "9.99",
-  //     rupess: "799.00",
-  //     mainImage: "7.webp",
-  //     images: {
-  //       0: "7.webp",
-  //       1: "8.webp",
-  //       2: "9.webp",
-  //     },
-  //   },
-  //   {
-  //     slug: "novice-shoulder-blitz",
-  //     title: "Novice Shoulder B.",
-  //     description: "Unleash 3D-Looking Cannonball Shoulders.",
-  //     price: "9.99",
-  //     rupess: "799.00",
-  //     mainImage: "10.webp",
-  //     images: {
-  //       0: "10.webp",
-  //       1: "11.webp",
-  //       2: "12.webp",
-  //     },
-  //   },
-  //   {
-  //     slug: "novice-chest-blitz",
-  //     title: "Novice Chest Blitz",
-  //     description: "Carve a Strong and Sculpted Chest.",
-  //     price: "9.99",
-  //     rupess: "799.00",
-  //     mainImage: "13.webp",
-  //     images: {
-  //       0: "13.webp",
-  //       1: "14.webp",
-  //       2: "15.webp",
-  //     },
-  //   },
-  //   {
-  //     slug: "novice-leg-blitz",
-  //     title: "Novice Leg Blitz",
-  //     description: "Build Powerful Legs and achieve godly Strength.",
-  //     price: "9.99",
-  //     rupess: "799.00",
-  //     mainImage: "16.webp",
-  //     images: {
-  //       0: "16.webp",
-  //       1: "17.webp",
-  //       2: "18.webp",
-  //     },
-  //   },
-  // ];
+  const products = [
+    {
+      slug: "novice-abs-blitz",
+      title: "Novice Abs Blitz",
+      description: "Carve Strong Core, Unveil Chiseled Six-Packs.",
+      price: "9.99",
+      rupess: "799.00",
+      mainImage: "9.webp",
+      images: {
+        0: "1.webp",
+        1: "2.webp",
+        2: "3.webp",
+      },
+    },
+    {
+      slug: "novice-arms-blitz",
+      title: "Novice Arms Blitz",
+      description: "Build Strong Arms from Scratch.",
+      price: "9.99",
+      rupess: "799.00",
+      mainImage: "4.webp",
+      images: {
+        0: "4.webp",
+        1: "5.webp",
+        2: "6.webp",
+      },
+    },
+    {
+      slug: "novice-back-blitz",
+      title: "Novice Back Blitz",
+      description: "Forge a Powerful, Muscular Back.",
+      price: "9.99",
+      rupess: "799.00",
+      mainImage: "7.webp",
+      images: {
+        0: "7.webp",
+        1: "8.webp",
+        2: "9.webp",
+      },
+    },
+    {
+      slug: "novice-shoulder-blitz",
+      title: "Novice Shoulder B.",
+      description: "Unleash 3D-Looking Cannonball Shoulders.",
+      price: "9.99",
+      rupess: "799.00",
+      mainImage: "10.webp",
+      images: {
+        0: "10.webp",
+        1: "11.webp",
+        2: "12.webp",
+      },
+    },
+    {
+      slug: "novice-chest-blitz",
+      title: "Novice Chest Blitz",
+      description: "Carve a Strong and Sculpted Chest.",
+      price: "9.99",
+      rupess: "799.00",
+      mainImage: "13.webp",
+      images: {
+        0: "13.webp",
+        1: "14.webp",
+        2: "15.webp",
+      },
+    },
+    {
+      slug: "novice-leg-blitz",
+      title: "Novice Leg Blitz",
+      description: "Build Powerful Legs and achieve godly Strength.",
+      price: "9.99",
+      rupess: "799.00",
+      mainImage: "16.webp",
+      images: {
+        0: "16.webp",
+        1: "17.webp",
+        2: "18.webp",
+      },
+    },
+  ];
+  return products;
 }
 
 export async function fetchAllFAQData() {
